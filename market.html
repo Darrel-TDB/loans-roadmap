@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Market comparison · Tonik Loans Roadmap</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav><div class="wrap"><a class="lg" href="index.html"><img src="assets/logo-white.png" alt="Tonik"></a><a href="index.html">Story</a><a href="market.html" class="on">Market</a><a href="compare.html">Today vs proposed</a><a href="selfservice.html">Self-service</a></div></nav>
+
+<header class="hero sm"><div class="wrap">
+<h1>Where the market is, and where it isn’t</h1>
+<p class="lead">Roadmap features checked against Maya, GCash, Home Credit, BillEase, Tala, SeaBank/SPayLater and the large banks. Public sources, October 2026.</p>
+</div></header>
+
+<section><div class="wrap">
+<div class="legend"><span class="s-lead">Be first</span> no lender found <span class="s-level">Level</span> offered, often with limits <span class="s-catch">Catch up</span> common, and Tonik lacks it</div>
+<div class="chips" id="chips" role="group" aria-label="Filter"></div>
+<div class="tw"><table class="mx"><thead><tr><th>Capability</th><th>Maya</th><th>GCash</th><th>Home Credit</th><th>BillEase</th><th>Banks</th><th>Others</th><th>Read</th></tr></thead><tbody id="rows"></tbody></table></div>
+<p class="sub" style="margin-top:16px;font-size:14px">“Not found” means not found on public pages and search, not proof it doesn’t exist. Confirm key gaps by mystery shopping before presenting them as fact.</p>
+</div></section>
+
+<section class="alt"><div class="wrap">
+<h2>Three things to take from this</h2>
+<div class="tri">
+<div style="--c:var(--engage)"><h3>One real gap</h3><p>On-demand due-date extension, post-booking due-date change and self-serve modification are not offered anywhere we looked. This is where Tonik can lead.</p></div>
+<div style="--c:var(--protect)"><h3>Two gaps we must close</h3><p>Reusable credit lines and auto-debit from other banks are already standard. They defend, rather than differentiate.</p></div>
+<div style="--c:var(--pur)"><h3>One edge to protect</h3><p>Tonik charges no pre-termination fee. CIMB’s personal loan charges 3% of the unbilled amount, minimum ₱300.</p></div>
+</div></div></section>
+
+<section><div class="wrap">
+<h2>Sources</h2>
+<ul class="src" id="src"></ul>
+</div></section>
+
+<footer><div class="wrap"><img src="assets/logo-white.png" alt="Tonik">Tonik Digital Bank · Loans Product Roadmap · Confidential</div></footer>
+
+<script>
+const NF="Not found";
+// capability, maya, gcash, homecredit, billease, banks, others, status
+const R=[
+["Extend a due date on demand",NF,"Blanket 15-day grace in typhoon areas (2025); 60-day holiday in 2021",NF,"Pay with Grace: 0% for 3 or 6 months, chosen at purchase","Blanket 30–60 day extensions in 2020; otherwise case by case",NF,"lead"],
+["Change due date after booking",NF,NF,NF,"Plan can’t change after choosing Pay with Grace","BDO: call the contact center. Security Bank: restructured due date can’t change","Tala: choose a date (up to 61 days) at the start. SPayLater: billing date fixed","lead"],
+["Self-serve loan modification",NF,NF,NF,NF,"BPI: app, hotline or branch, case by case, decision in 15–30 banking days (third-party report). BDO, Security Bank: form, branch or call",NF,"lead"],
+["Split a bill into installments",NF,"Pays 400+ billers; no bill splitting found",NF,"Pays bills; no splitting found",NF,NF,"lead"],
+["Price-drop protection",NF,NF,NF,NF,"Not found at any Philippine lender",NF,"lead"],
+["Partial prepayment","Terms allow repaying part early","Pay any time; GCredit partial payment frees the limit","Yes, but ask customer service first; fee applies","Advance payment covers next installment; excess to principal","CIMB charges 3% of unbilled amount (min ₱300) on early settlement","Tala: partial payments any time","level"],
+["Twice-monthly or payday schedule",NF,"GGives: twice-monthly for select users",NF,"Pay Later: pay in full on next payday",NF,"Tala: date chosen around payday","level"],
+["Rewards for good repayment","Time-limited cashback for on-time first installment; last-installment-free promos","GLoan interest cashback for paying in full 1+ month early","One-time ₱500 rebate for auto-debit signup","Features unlock with repayment",NF,"Tala: limits grow with on-time payment","level"],
+["Solar and motorcycle financing",NF,NF,"Motorcycle and e-bike installments, 12–36 months, from 5% down","—","BPI and Security Bank solar mortgages (BPI solar portfolio up 89% in 2025); SB Finance solar loan up to ₱2M; motorcycle loans at several banks",NF,"level"],
+["Reusable credit line","Easy Credit line; personal loan up to ₱250,000","GCredit line and GLoan","Cash loans; Emcor credit card","BNPL limit plus cash loan","CIMB REVI Credit line","SeaBank Credit up to ₱100,000; SPayLater","catch"],
+["Auto-debit from other banks","Auto-deduct from Maya account","Auto-deduct from wallet","eADA with partner banks","Pay by InstaPay, PESONet, wallets, over the counter","ADA or post-dated checks are standard","SPayLater: free repayment via UnionBank eADA","catch"]];
+const T={lead:"Be first",level:"Level",catch:"Catch up"},$=s=>document.querySelector(s);let f="All";
+function draw(){$("#rows").innerHTML=R.filter(r=>f==="All"||r[7]===f).map(r=>`<tr><td>${r[0]}</td>${r.slice(1,7).map(c=>`<td class="${c===NF||c==="—"?"nf":""}">${c}</td>`).join("")}<td><span class="s-${r[7]}">${T[r[7]]}</span></td></tr>`).join("")}
+[["All","All"],["Be first","lead"],["Level","level"],["Catch up","catch"]].forEach(([n,v])=>{const b=document.createElement("button");b.className="chip";b.textContent=n;b.setAttribute("aria-pressed",v==="All");
+b.onclick=()=>{f=v;[...$("#chips").children].forEach(c=>c.setAttribute("aria-pressed",c===b));draw()};$("#chips").append(b)});
+draw();
+const S=[["GCash GLoan interest cashback","https://help.gcash.com/hc/articles/39050895669145-How-can-I-get-GLoan-interest-cashback"],
+["GCash 15-day grace period (2025)","https://mynt.com.ph/news-draft/gcash-provides-15-day-grace-period-for-borrowers-affected-by-recent-typhoons"],
+["GCash payment holiday FAQ","https://gcash-portal.lab.gcash.com/?p=283946"],
+["GCredit partial payment (CIMB)","https://www.cimbbank.com.ph/en/help-and-support/faqs/my-loan/gcredit/can-i-pay-for-my-credit-line-before-its-even-due-what-happens-if-i-make-a-partial-payment-before-my-due-date.html"],
+["GGives twice-monthly payments","https://newsbytes.ph/2022/01/13/gcash-rolls-out-new-feature-allowing-pinoys-to-pay-on-installments/"],
+["Maya Suki Credit terms","https://www.mayabank.ph/?p=6591"],
+["Maya Personal Loan cashback","https://www.maya.ph/deals/accept-your-offer-and-get-up-to-p500-cashback-with-maya-personal-loan-2026"],
+["Home Credit early repayment","https://www.homecredit.ph/pay-loans/pay-over-the-counter"],
+["Home Credit auto-debit","https://homecredit.ph/pay-loans/auto-debit-arrangement"],
+["Home Credit motorcycle financing","https://www.sunstar.com.ph/davao/home-credit-boosts-mindanao-footprint"],
+["BillEase Pay with Grace","https://lg.com/ph/promotions/billease-0-interest"],
+["BillEase EasyPace","https://jansport.com.ph/pages/billease-faq"],
+["BNPL comparison (SPayLater, BillEase)","https://fintechnews.ph/top-bnpl-philippines/"],
+["Tala flexible loans","https://blog.ourcrowd.net/?p=42860"],
+["SeaBank Credit","https://apptopia.com/google-play/app/ph.seabank.seabank/about"],
+["CIMB personal loan fees","https://cimbbank.com.ph/en/help-and-support/faqs/my-loan/personal-loan/are-there-other-fees-and-charges.html"],
+["Banks’ 2020 extensions","https://www.abs-cbn.com/business/03/17/20/list-philippine-banks-extending-payment-due-dates-to-help-filipinos-in-time-of-covid-19"],
+["BDO loan requests","https://bdo.com.ph/personal/loans/loan-client-request"],
+["Security Bank restructuring FAQ","https://help.securitybank.com/152257-for-loans/change-due-date"],
+["BPI hardship programs (third party)","https://www.respicio.ph/commentaries/hardship-programs-and-restructuring-options-for-bpi-loan-borrowers"],
+["BPI solar mortgage growth","https://context.ph/2026/07/28/lenders-solar-mortgage-program-posts-89-expansion/"],
+["SB Finance solar loan","https://solarquarter.com/2024/07/23/sb-finance-launches-solar-panel-loan-program-in-the-philippines-to-boost-sustainability/"],
+["Motorcycle lenders overview","https://www.expressway.ph/car-loan/motorcycle-loan-philippines"]];
+$("#src").innerHTML=S.map(([t,u])=>`<li><a href="${u}" target="_blank" rel="noopener">${t}</a></li>`).join("");
+</script>
+</body>
+</html>

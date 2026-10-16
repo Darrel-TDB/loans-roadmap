@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Today vs. Proposed · Tonik Loans Roadmap</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav><div class="wrap"><a class="lg" href="index.html"><img src="assets/logo-white.png" alt="Tonik"></a><a href="index.html">Story</a><a href="market.html">Market</a><a href="compare.html" class="on">Today vs proposed</a><a href="selfservice.html">Self-service</a></div></nav>
+
+<header class="hero sm"><div class="wrap">
+<h1>What customers get today, and what changes</h1>
+<p class="lead">Both live loan offers on tonikbank.com, compared capability by capability with the roadmap proposal.</p>
+</div></header>
+
+<section><div class="wrap">
+<h2>Our two offers today</h2>
+<p class="sub">Both are unsecured, fully in-app, and capped at ₱50,000. Source: tonikbank.com loan pages.</p>
+<div class="two">
+<div class="offer"><h3>Credit Builder Loan</h3><small>Apply in the Tonik app</small><ul style="margin-top:12px">
+<li>Up to ₱50,000 over 6, 9 or 12 months</li>
+<li>As low as 4.20% monthly add-on rate</li>
+<li>No credit check or collateral; 1 valid ID and a Tonik Account</li>
+<li>Age 23 to 58; instant approval, real-time disbursement</li>
+<li>Early settlement free, by closing the whole loan</li>
+<li>Due date and terms can’t be changed until fully repaid</li></ul></div>
+<div class="offer"><h3>Shop Installment Loan</h3><small>Apply in-store at partner retailers</small><ul style="margin-top:12px">
+<li>₱5,000 to ₱50,000 over 3, 6, 9 or 12 months</li>
+<li>Fixed 4.5% monthly interest (54% APR); no processing fee</li>
+<li>Minimum 10% downpayment; up to 3 items per loan</li>
+<li>Store promoter gives a QR code; confirmation code ends the sale</li>
+<li>Early payment is free</li>
+<li>Payments auto-debit from the Tonik Account at 10 PM on the due date</li></ul></div>
+</div>
+<p class="sub" style="margin-top:18px;font-size:15px">Both offers add the optional PayHinga insurance, which unlocks a payment holiday after 3 consecutive on-time payments. Repayment is by Pay Now (appears 7 days before the due date) or top-up via PESONet, InstaPay, over-the-counter or ECPay/GCash.</p>
+</div></section>
+
+<section class="alt"><div class="wrap">
+<h2>Capability by capability</h2>
+<p class="sub">Filter by area. The “Today” column reflects the website; the “Proposed” column is this roadmap.</p>
+<div class="sum" id="sum"></div>
+<div class="chips" id="chips" role="group" aria-label="Filter"></div>
+<div class="tw"><table><thead><tr><th>Capability</th><th>Today</th><th>Proposed</th><th>Change</th></tr></thead><tbody id="rows"></tbody></table></div>
+<p class="sub" style="margin-top:16px;font-size:14px">Note: tonikbank.com quotes “as low as” rates, and its FAQ also mentions 4.84% for the Credit Builder Loan. Rates shown here are those on the product pages.</p>
+</div></section>
+
+<section><div class="wrap">
+<h2>The biggest shift: customers do it themselves</h2>
+<p class="sub">Four of the changes above are things a customer cannot do today without finishing the loan. See each one working in the app.</p>
+<a class="chip" style="display:inline-block;text-decoration:none;background:var(--pur);color:#fff;border-color:var(--pur)" href="selfservice.html">Try the self-service journeys</a>
+</div></section>
+
+<footer><div class="wrap"><img src="assets/logo-white.png" alt="Tonik">Tonik Digital Bank · Loans Product Roadmap · Confidential</div></footer>
+
+<script>
+const R=[
+["Borrowing","Application","Separate flows per product: Loans tile in the app for Credit Builder, store QR code for Shop loans","One unified onboarding and offer across all products","imp","Unified Loan Offering"],
+["Borrowing","Reusing approved credit","Approval in one product can’t be used in another","Multiple loans on one approval, or a revolving line","new","Multiple Loan / Revolving Line"],
+["Borrowing","The offer","Accept the offer as presented; short validity","Switch product after the offer; offers stay valid longer","imp","Offer Flexibility, Extended Offer Validity"],
+["Borrowing","Loan size and security","Unsecured only, up to ₱50,000","Collateral-backed: Solar up to ₱250,000 (4 yrs), eMotorcycle up to ₱150,000 (3 yrs)","new","New Segments / Channels"],
+["Borrowing","In-store financing","Shop loan via promoter QR code; up to 3 items, 10% downpayment","Embedded at point of sale with Tendo–SIL; basket financing; price drop protection","imp","Tendo–SIL Integration"],
+["Repayment","Due date","Set at application; locked until the loan is repaid","Extend up to 15 days in-app for a flat fee; due date management with new logic; change due date","new","Extend Due Date, Change on Due Date"],
+["Repayment","Paying ahead","Settle the entire balance by closing the loan","Pay any amount toward principal; balance and installments update instantly","new","Partial Lump-Sum Prepayment"],
+["Repayment","Payment source","Auto-debit from the Tonik Account only; top up from other banks","Auto-debit directly from other banks (ADA / E-ADA)","imp","ADA / E-ADA with Other Banks"],
+["Repayment","Schedule","One monthly installment","Twice-monthly option that follows payroll; split bills into two payments","new","Bi-Monthly Payment Option"],
+["Repayment","Changing loan terms","Terms can’t be modified after approval","Modified loan issued through the Modification Hub; customer accepts within 48 hours","new","Modification Hub"],
+["Repayment","Collections","Payment reminders; Pay Now appears 7 days before due date","Nudges triggered by behavior, before a payment is missed","imp","Event-Driven Collections"],
+["Rewards & add-ons","Protection and fees","PayHinga insurance payment holiday after 3 on-time payments","More value-added services and flexible fee-unlock features","imp","Expand VAS"],
+["Rewards & add-ons","Rewarding good behavior","Fixed rate; no repayment reward on the product pages","Rate reductions for good repayment; real-time cashback for on-time payment","new","Dynamic Interest Reduction, Good Standing Rebate"]];
+const $=s=>document.querySelector(s);let f="All";
+function draw(){const a=R.filter(r=>f==="All"||r[0]===f);
+$("#rows").innerHTML=a.map(r=>`<tr><td>${r[1]}</td><td class="now2">${r[2]}</td><td class="prop">${r[3]}</td><td><span class="badge b-${r[4]}">${r[4]==="new"?"New":"Improved"}</span><div class="ini">${r[5]}</div></td></tr>`).join("");
+$("#sum").innerHTML=`<span><b>${a.length}</b>capabilities</span><span><b>${a.filter(r=>r[4]==="new").length}</b>brand new</span><span><b>${a.filter(r=>r[4]==="imp").length}</b>improved</span>`}
+["All","Borrowing","Repayment","Rewards & add-ons"].forEach(n=>{const b=document.createElement("button");b.className="chip";b.textContent=n;b.setAttribute("aria-pressed",n==="All");
+b.onclick=()=>{f=n;[...$("#chips").children].forEach(c=>c.setAttribute("aria-pressed",c===b));draw()};$("#chips").append(b)});
+draw();
+</script>
+</body>
+</html>

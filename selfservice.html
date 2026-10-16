@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Self-service · Tonik Loans Roadmap</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav><div class="wrap"><a class="lg" href="index.html"><img src="assets/logo-white.png" alt="Tonik"></a><a href="index.html">Story</a><a href="market.html">Market</a><a href="compare.html">Today vs proposed</a><a href="selfservice.html" class="on">Self-service</a></div></nav>
+
+<header class="hero sm"><div class="wrap">
+<h1>Customers fix it themselves, in the app</h1>
+<p class="lead">Every self-service feature removes a support call, and a reason to miss a payment. Try each journey as a customer would.</p>
+</div></header>
+
+<section><div class="wrap">
+<h2>Today, customers are stuck. Proposed, they’re in control.</h2>
+<p class="sub">On tonikbank.com today, due dates and terms are locked until the loan is repaid, and early payment means closing the whole loan.</p>
+<div class="two">
+<div class="now"><h3>Today</h3><ul>
+<li>Can’t change the due date until fully repaid</li>
+<li>Can’t modify loan terms after approval</li>
+<li>Paying early means settling the full balance</li>
+<li>One monthly installment, whatever the payday</li></ul></div>
+<div class="next"><h3>Proposed, all in-app</h3><ul>
+<li>Extend a due date up to 15 days in two taps</li>
+<li>Prepay any amount and see the balance update instantly</li>
+<li>Split a bill into two payments at 0% interest</li>
+<li>Reshape an offer before accepting it</li></ul></div>
+</div></div></section>
+
+<section class="alt"><div class="wrap">
+<h2>Try the journeys</h2>
+<p class="sub">Illustrative mockups of the proposed flows. Amounts and fees are examples from the roadmap.</p>
+<div class="tabs" id="tabs" role="group" aria-label="Journey"></div>
+<div class="sim">
+<div><div class="phone" id="phone" aria-live="polite"></div><div class="dots" id="dots"></div></div>
+<div class="rules" id="rules"></div>
+</div>
+<div class="pr3">
+<div><b>One place</b>Everything lives under Payments &gt; Manage Payments.</div>
+<div><b>Fees up front</b>The fee is shown before the customer confirms.</div>
+<div><b>Instant result</b>Balances and dates update in real time.</div>
+<div><b>Collections adapt</b>Reminders and call queues respond automatically.</div>
+</div>
+</div></section>
+
+<footer><div class="wrap"><img src="assets/logo-white.png" alt="Tonik">Tonik Digital Bank · Loans Product Roadmap · Confidential</div></footer>
+
+<script>
+const $=s=>document.querySelector(s),P=n=>"₱"+Number(n).toLocaleString("en-PH",{minimumFractionDigits:n%1?2:0});
+const J={
+ext:{n:"Extend due date",steps:4,rules:{"Where":"Payments > Manage Payments: pick an eligible upcoming payment, tap Extend Due Date","How long":"Up to 15 days of grace, depending on the date selected","Fee":"Flat processing fee, for example ₱100 to ₱500","Collections":"Push reminders, SMS and agent call queues pause until the new due date","Why it matters":"Supports the customer at the moment they would otherwise miss a payment","In the market":"No lender we reviewed offers this on demand. Relief comes as blanket calamity grace periods or through support."}},
+pre:{n:"Partial prepayment",steps:4,rules:{"Where":"Payments > Manage Payments: enter a custom amount, tap Make Partial Payment","Speed":"Real-time: principal and amortization update instantly","Fee":"Minimal processing fee, for example ₱500 to ₱1,000, above a minimum amount","Impact":"Lowers total interest and future installments, or shortens the term","Why it matters":"Customers who can pay more do, which cuts delinquency risk","In the market":"Several lenders allow it, often through customer service first. The edge is doing it instantly, in-app."}},
+split:{n:"Split a bill",steps:3,rules:{"Who":"Existing loan clients only","Limit":"Bills up to ₱2,000","How":"Two equal bi-monthly installments","Fee":"₱100 upfront, 0% interest","Why it matters":"Turns everyday bill payments into a reason to stay with Tonik","In the market":"No equivalent found."}},
+offer:{n:"Flexible offer",steps:3,rules:{"Where":"On the loan offer screen, before accepting","What changes":"Customers can switch product or adjust terms after seeing the offer","Validity":"Pre-approved offers stay alive longer","Why it matters":"Customers shape the loan to their needs, so they are more likely to say yes"}}};
+let k="ext",s=0,st={days:15,amt:5000,bill:1800,term:6,prod:"Credit Builder Loan"};
+const base=new Date(2026,10,15),fd=d=>d.toLocaleDateString("en-PH",{month:"long",day:"numeric"}),plus=n=>{const d=new Date(base);d.setDate(d.getDate()+n);return fd(d)};
+const row=(a,b)=>`<div class="r"><span>${a}</span><b>${b}</b></div>`;
+function screen(){
+if(k==="ext")return[
+["Your loan",`<div class="pc">${row("Next payment",P(2557.4))}${row("Due",fd(base))}</div>`,"Manage Payments"],
+["Manage Payments",`<div class="pc">${row("Eligible payment",P(2557.4))}${row("Due",fd(base))}</div><button class="opt" style="border-color:var(--pur)">Extend Due Date</button>`,"Extend Due Date"],
+["Choose extension",[5,10,15].map(d=>`<button class="opt" data-d="${d}" aria-pressed="${st.days==d}">${d} days · new due date ${plus(d)}</button>`).join("")+`<div class="pc">${row("Processing fee","₱100 (example)")}</div>`,"Confirm extension"],
+["Due date extended",`<div class="pc">${row("New due date",plus(st.days))}${row("Fee","₱100")}</div><div class="ok">Reminders, SMS and calls are paused until ${plus(st.days)}.</div>`,"Done"]][s];
+if(k==="pre"){const left=30000-st.amt;return[
+["Manage Payments",`<div class="pc">${row("Outstanding principal",P(30000))}${row("Next payment",P(2557.4))}</div>`,"Make Partial Payment"],
+["Enter amount",`<input class="ph-in" id="amt" type="number" min="500" max="30000" value="${st.amt}" aria-label="Amount"><div class="pc" style="margin-top:10px">${row("Principal after payment",P(Math.max(left,0)))}</div>`,"Review"],
+["Review",`<div class="pc">${row("Payment",P(st.amt))}${row("Processing fee","₱500 (example)")}${row("Principal after",P(Math.max(left,0)))}</div>`,"Confirm payment"],
+["Payment received",`<div class="pc">${row("New principal",P(Math.max(left,0)))}</div><div class="ok">Future installments are recalculated instantly.</div>`,"Done"]][s]}
+if(k==="split"){const b=Math.min(st.bill,2000);return[
+["Pay bills",`<input class="ph-in" id="bill" type="number" min="100" max="2000" value="${st.bill}" aria-label="Bill amount"><div class="pc" style="margin-top:10px">${st.bill>2000?"Split Pay covers bills up to ₱2,000":row("Split Pay available","Yes")}</div>`,"Split my payment"],
+["Split Pay",`<div class="pc">${row("Bill",P(b))}${row("Installment 1",P(b/2))}${row("Installment 2",P(b/2))}${row("Upfront fee","₱100")}${row("Interest","0%")}</div>`,"Confirm split"],
+["Bill paid",`<div class="pc">${row("Pay now",P(100))}${row("Then 2 installments of",P(b/2))}</div><div class="ok">Bill is paid in full today.</div>`,"Done"]][s]}
+return[
+["Your offer",`<div class="pc">${row("Product",st.prod)}${row("Term",st.term+" months")}</div>`,"Change my offer"],
+["Shape your loan",["Credit Builder Loan","Shop Installment Loan"].map(p=>`<button class="opt" data-p="${p}" aria-pressed="${st.prod==p}">${p}</button>`).join("")+[6,9,12].map(t=>`<button class="opt" data-t="${t}" aria-pressed="${st.term==t}">${t} months</button>`).join(""),"Update offer"],
+["Offer updated",`<div class="pc">${row("Product",st.prod)}${row("Term",st.term+" months")}</div><div class="ok">Review and accept when you’re ready.</div>`,"Accept offer"]][s]}
+function render(){const [h,b,btn]=screen(),last=s===J[k].steps-1;
+$("#phone").innerHTML=`<div class="hi"><span>Hi Juan!</span><span>🔔</span></div><h5>${h}</h5>${b}<button class="pbtn" id="go">${last&&btn==="Done"?"Done · restart":btn}</button>${s?'<button class="pbtn ghost" id="bk">Back</button>':""}`;
+$("#dots").innerHTML=Array.from({length:J[k].steps},(_,i)=>`<i class="${i===s?"on":""}"></i>`).join("");
+$("#go").onclick=()=>{s=last?0:s+1;render()};if(s)$("#bk").onclick=()=>{s--;render()};
+document.querySelectorAll("[data-d]").forEach(e=>e.onclick=()=>{st.days=+e.dataset.d;render()});
+document.querySelectorAll("[data-t]").forEach(e=>e.onclick=()=>{st.term=+e.dataset.t;render()});
+document.querySelectorAll("[data-p]").forEach(e=>e.onclick=()=>{st.prod=e.dataset.p;render()});
+[["amt","amt"],["bill","bill"]].forEach(([id,key])=>{const i=document.getElementById(id);if(i)i.oninput=()=>{st[key]=Math.max(0,+i.value);const p=i.selectionStart;render();const n=document.getElementById(id);n.focus()}});
+$("#rules").innerHTML=`<h3>${J[k].n}</h3><p style="color:var(--mut)">The rules behind this journey</p><dl>${Object.entries(J[k].rules).map(([a,b])=>`<dt>${a}</dt><dd>${b}</dd>`).join("")}</dl>`}
+Object.keys(J).forEach(key=>{const b=document.createElement("button");b.className="chip";b.textContent=J[key].n;b.setAttribute("aria-pressed",key===k);
+b.onclick=()=>{k=key;s=0;[...$("#tabs").children].forEach(c=>c.setAttribute("aria-pressed",c===b));render()};$("#tabs").append(b)});
+render();
+</script>
+</body>
+</html>
